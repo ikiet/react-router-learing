@@ -9,7 +9,7 @@ import EventRootLayout from "./components/EventRootLayout";
 import ErrorPage from "./pages/ErrorPage";
 import { loader as eventDetailLoader } from './pages/EventDetailPage';
 import { action as manipulateEventAction } from './components/EventForm';
-import NewsletterPage, { action as newsletterAction } from "./pages/Newsletter";
+import NewsletterPage, { action as newsletterAction } from "./pages/NewsletterPage";
 // Challenge / Exercise
 
 // 1. Add five new (dummy) page components (content can be simple <h1> elements)
