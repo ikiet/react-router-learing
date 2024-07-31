@@ -25,6 +25,10 @@ export const action = async ({ request }) => {
     },
     body: JSON.stringify(data),
   });
+  
+  if (response.status === 422) {
+    return response;
+  }
 
   if (!response.ok) {
     throw json({message: 'Failed to create event'}, {
