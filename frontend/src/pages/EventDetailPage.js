@@ -15,9 +15,19 @@ export const loader = async ({ params }) => {
   if (!response.ok) {
     throw json({
       message: "Failed to fetch event detail",
-    }, {
-        status: 500,
-      });
+    }, { status: 500 });
   }
   return response;
+}
+
+export const action = async ({ params }) => {
+  const response = await fetch(`http://localhost:8080/events/${params.eventId}`, {
+    method: 'delete'
+  });
+  if (!response.ok) {
+    throw json({
+      message: "Failed to delete event"
+    }, { status: 500 })
+  }
+  return redirect('/events');
 }
