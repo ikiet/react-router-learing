@@ -1,4 +1,4 @@
-import { Form, useActionData, useNavigate, useNavigation } from 'react-router-dom';
+import { Form, useActionData, useNavigate, useNavigation, json, redirect } from 'react-router-dom';
 
 import classes from './EventForm.module.css';
 
@@ -13,7 +13,7 @@ function EventForm({ method, event }) {
   }
 
   return (
-    <Form method='post' className={classes.form}>
+    <Form method={method} className={classes.form}>
       {
         actionData?.errors && <ul>
           {Object.values(actionData?.errors).map((error) => 
@@ -53,6 +53,46 @@ function EventForm({ method, event }) {
       </div>
     </Form>
   );
+}
+
+export const action = async ({ request, params }) => {
+
+  const method = request.method;
+
+  const formData = await request.formData();
+
+  const data = {
+    title: formData.get('title'),
+    image: formData.get('image'),
+    date: formData.get('date'),
+    description: formData.get('description'),
+  }
+
+  let url = 'http://localhost:8080/events';
+
+  if(method === 'PATCH') {
+    url = 'http://localhost:8080/events/' + params.eventId;
+  }
+
+  const response = await fetch(url, {
+    method: method,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (response.status === 422) {
+    return response;
+  }
+
+  if (!response.ok) {
+    throw json({message: 'Failed to create event'}, {
+      status: 500,
+    });
+  }
+  return redirect('/events');
+
 }
 
 export default EventForm;

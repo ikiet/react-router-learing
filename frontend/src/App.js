@@ -8,7 +8,7 @@ import RootLayout from "./components/RootLayout";
 import EventRootLayout from "./components/EventRootLayout";
 import ErrorPage from "./pages/ErrorPage";
 import { loader as eventDetailLoader } from './pages/EventDetailPage';
-import { action as newEventAction } from './pages/NewEventPage';
+import { action as manipulateEventAction } from './components/EventForm';
 // Challenge / Exercise
 
 // 1. Add five new (dummy) page components (content can be simple <h1> elements)
@@ -63,13 +63,14 @@ const router = createBrowserRouter([
               {
                 path: "edit",
                 element: <EditEventPage />,
+                action: manipulateEventAction,
               },
             ],
           },
           {
             path: "new",
             element: <NewEventPage />,
-            action: newEventAction,
+            action: manipulateEventAction,
           },
         ],
       },
